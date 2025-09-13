@@ -1,0 +1,20 @@
+ANÁLISE DO DASHBOARD DE PACIENTES - DR. JOÃO
+
+Introdução:
+Este documento apresenta as principais conclusões extraídas do dashboard de análise de pacientes com risco de câncer de pulmão, criado no Power BI.
+
+Análise dos Gráficos:
+
+1. Análise de Risco por Tabagismo (Gráfico de Colunas):
+   - O que mostra: O gráfico compara a quantidade de pacientes com e sem risco de câncer entre os grupos de fumantes e não fumantes.
+   - Conclusão: Observa-se que a proporção de pacientes diagnosticados com 'Risco' é significativamente maior no grupo que pratica o tabagismo.
+   - Hipótese: Este resultado reforça a forte correlação documentada na literatura médica entre o consumo de tabaco e o aumento do risco de desenvolvimento de doenças pulmonares, incluindo o câncer.
+
+2. Perfil Demográfico por Sexo (Gráfico de Rosca):
+   - O que mostra: O gráfico ilustra a distribuição percentual de pacientes entre os sexos Feminino, Masculino, Outro e Não declarado.
+   - Conclusão: A base de dados apresenta uma distribuição relativamente equilibrada entre os sexos masculino e feminino, com uma minoria de pacientes se identificando como 'Outro' ou 'Não declarado'.
+
+3. Análise da Faixa Etária (Histograma):
+   - O que mostra: O histograma agrupa os pacientes por faixas de idade, mostrando a concentração em cada grupo.
+   - Conclusão: A maior concentração de pacientes na base de dados está na faixa etária entre 55 e 70 anos.
+   - Hipótese: Isso pode sugerir que a busca por diagnósticos pneumológicos ou a incidência de sintomas se intensifica em idades mais avançadas, o que é consistente com o perfil de risco para muitas doenças crônicas.
