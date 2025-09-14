@@ -1,0 +1,109 @@
+Análise de Consultas e Geração de Insights – VelozCar
+ 
+
+Este documento detalha os resultados das consultas realizadas no banco de dados
+da VelozCar, com foco na interpretação dos dados para apoiar decisões
+estratégicas e operacionais.
+
+=========================================================================
+Consultas de Agregação e Agrupamento
+=========================================================================
+
+---
+Consulta 1: Total de clientes cadastrados por ano
+---
+SQL: SELECT YEAR(data_cadastro) AS ano, COUNT(id_cliente) AS total_clientes FROM Clientes GROUP BY YEAR(data_cadastro) ORDER BY ano;
+
+O que a consulta mostrou:
+A consulta exibiu o número total de novos clientes que se cadastraram na concessionária, agrupados por ano. No nosso conjunto de dados, mostrou que 8 clientes foram cadastrados em 2024.
+
+Insight prático:
+Acompanhar essa métrica ao longo do tempo permite avaliar a eficácia das campanhas de marketing e o crescimento da base de clientes ano a ano. Um aumento indica sucesso na aquisição, enquanto uma queda pode sinalizar a necessidade de novas estratégias para atrair público.
+
+---
+Consulta 2: Quantidade de funcionários por cargo
+---
+SQL: SELECT cargo, COUNT(id_funcionario) AS quantidade_funcionarios FROM Funcionarios GROUP BY cargo;
+
+O que a consulta mostrou:
+A consulta retornou a distribuição da equipe por cargo, por exemplo: 1 Gerente de Vendas, 2 Atendentes e 1 Coordenadora de Frota.
+
+Insight prático:
+Isso oferece uma visão clara da estrutura organizacional. A gestão pode usar essa informação para planejar contratações, identificar gargalos (ex: poucos atendentes para um alto volume de aluguéis) e garantir que a equipe esteja dimensionada corretamente para a demanda.
+
+---
+Consulta 3: Média da diária por ano de fabricação do veículo
+---
+SQL: SELECT ano_fabricacao, AVG(valor_diaria) AS media_diaria FROM Veiculos GROUP BY ano_fabricacao ORDER BY ano_fabricacao DESC;
+
+O que a consulta mostrou:
+A consulta calculou o preço médio da diária para veículos de cada ano. Por exemplo, veículos de 2023 têm uma diária média maior do que os de 2021.
+
+Insight prático:
+Essa análise é fundamental para a precificação da frota. Confirma que a política de preços está alinhada com a idade (e valor) dos veículos. Também ajuda a identificar se algum grupo de veículos está com preço desalinhado (muito caro ou muito barato) em comparação com outros de idade similar.
+
+---
+Consulta 4: Custo total de manutenção por veículo
+---
+SQL: SELECT id_veiculo, SUM(custo) AS custo_total_manutencao FROM Manutencoes GROUP BY id_veiculo;
+
+O que a consulta mostrou:
+A consulta somou todos os custos de manutenção para cada veículo individualmente, mostrando quais carros geraram mais despesas.
+
+Insight prático:
+Este é um indicador chave de desempenho da frota. Veículos com custos de manutenção consistentemente altos podem ser candidatos à substituição. A informação ajuda a calcular o custo total de propriedade (TCO - Total Cost of Ownership) de cada modelo, influenciando futuras decisões de compra de novos veículos.
+
+---
+Consulta 5: Total de aluguéis por status
+---
+SQL: SELECT status, COUNT(id_aluguel) AS total_alugueis FROM Alugueis GROUP BY status;
+
+O que a consulta mostrou:
+A consulta apresentou uma contagem de quantos aluguéis estão atualmente 'Ativos' e quantos já foram 'Finalizados'.
+
+Insight prático:
+Oferece um panorama instantâneo da operação. O número de aluguéis 'Ativos' indica a receita corrente e a ocupação da frota. Comparar o volume de aluguéis finalizados em diferentes períodos (ex: mês a mês) ajuda a medir a performance de vendas. Um alto número de aluguéis 'Atrasados' (se houvesse) seria um alerta para a equipe de cobrança.
+
+---
+Consulta 6: Total arrecadado por método de pagamento
+---
+SQL: SELECT metodo_pagamento, SUM(valor_pagamento) AS total_arrecadado FROM Pagamentos WHERE status_pagamento = 'Concluído' GROUP BY metodo_pagamento;
+
+O que a consulta mostrou:
+A consulta somou o valor total recebido através de cada método de pagamento (PIX, Cartão, Boleto).
+
+Insight prático:
+Ajuda a entender a preferência dos clientes e a otimizar os processos financeiros. Se o PIX é o método mais usado, a empresa pode garantir que o processo de pagamento via PIX seja o mais ágil possível. Se o uso de cartão de crédito é alto, pode ser interessante negociar taxas melhores com as operadoras.
+
+=========================================================================
+Consultas com Junção de Tabelas (JOIN)
+=========================================================================
+
+---
+Consulta 7: Relatório de Aluguéis Ativos (INNER JOIN)
+---
+SQL: [Código da consulta 7]
+
+O que a consulta mostrou:
+A consulta gerou um relatório detalhado de todos os aluguéis em andamento, listando o nome do cliente, o modelo do carro alugado, o funcionário que realizou o atendimento e a data de devolução prevista.
+
+Insight prático:
+Este é um relatório operacional essencial para o dia a dia. Permite à equipe:
+1.  Acompanhar quais veículos estão prestes a ser devolvidos.
+2.  Entrar em contato com clientes se necessário.
+3.  Saber qual funcionário é o ponto de contato para cada aluguel ativo, facilitando a resolução de problemas.
+É a base para o controle diário da frota alugada.
+
+---
+Consulta 8: Histórico de Manutenção por Veículo (LEFT JOIN)
+---
+SQL: [Código da consulta 8]
+
+O que a consulta mostrou:
+A consulta listou TODOS os veículos da frota. Para os veículos que já passaram por manutenção, ela exibiu os detalhes de cada serviço (descrição, custo, data). Veículos que nunca foram para a oficina apareceram na lista com os campos de manutenção em branco (NULL).
+
+Insight prático:
+Essa visão completa é crucial para a gestão da frota. Com ela, a coordenadora de frota pode:
+1.  Identificar rapidamente veículos que nunca passaram por revisão, programando manutenções preventivas.
+2.  Acessar o histórico completo de um veículo antes de um novo aluguel, garantindo sua confiabilidade.
+3.  Fornecer um relatório de saúde da frota para a diretoria, embasando decisões sobre renovação e vendas de ativos.
